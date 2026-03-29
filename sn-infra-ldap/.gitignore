@@ -1,0 +1,23 @@
+# Environment
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# OS
+.DS_Store
+
+# Editors/IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs and temp
+*.log
+logs/
+tmp/
+
+# Data
+/data/
+
