@@ -1,0 +1,25 @@
+# Environment
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# OS
+.DS_Store
+
+# Editors/IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs and temp
+*.log
+logs/
+tmp/
+
+# Jenkins data
+/jenkins_home/
+
+# Docker volumes
+/data/
