@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  sn-zabbix-mysql-server:
+    image: mysql:8.0
+    container_name: sn-zabbix-mysql-server
+    ports:
+      - 13306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+      - --default-authentication-plugin=mysql_native_password
+    networks:
+      - scm-network
+  sn-zabbix-mysql-backup:
+    image: alpine:3.20
+    container_name: sn-zabbix-mysql-backup
+    depends_on:
+      - sn-zabbix-mysql-server
+    volumes:
+      - ./backup:/backup:ro
+      - ./backup-data:/backups
+    env_file:
+      - .env
+    restart: unless-stopped
+    entrypoint: ["/backup/entrypoint.sh"]
+    networks:
+      - scm-network
+
+networks:
+  scm-network:
+    external: true
+
+volumes:
+  mysql_data:

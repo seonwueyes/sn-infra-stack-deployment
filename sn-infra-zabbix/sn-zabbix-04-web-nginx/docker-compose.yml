@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  sn-zabbix-web-nginx:
+    container_name: sn-zabbix-web-nginx
+    image: zabbix/zabbix-web-nginx-mysql:alpine-6.4-latest
+    ports:
+      - 10030:8080
+    env_file:
+      - ../sn-zabbix-01-db/.env
+    environment:
+      ZBX_SERVER_HOST: sn-zabbix-server
+      DB_SERVER_HOST: sn-zabbix-mysql-server
+    networks:
+      - scm-network
+
+networks:
+  scm-network:
+    external: true

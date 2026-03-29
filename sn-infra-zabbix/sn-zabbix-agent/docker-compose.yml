@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  sn-zabbix-agent01:
+    build:
+      context: ./
+    image: seonwueyes.github.com/sn-zabbix-agent-tmpl:alpine-6.4-latest
+    environment:
+      - ZABBIX_AGENT_HOSTNAME=sn-zabbix-agent01
+      - ZABBIX_SERVER_HOSTNAME=sn-zabbix-server
+    networks:
+      - scm-network
+
+  sn-zabbix-agent02:
+    build:
+      context: ./
+    image: seonwueyes.github.com/sn-zabbix-agent-tmpl:alpine-6.4-latest
+    environment:
+      - ZABBIX_AGENT_HOSTNAME=sn-zabbix-agent02
+      - ZABBIX_SERVER_HOSTNAME=sn-zabbix-server
+    networks:
+      - scm-network
+
+  sn-zabbix-agent03:
+    build:
+      context: ./
+    image: seonwueyes.github.com/sn-zabbix-agent-tmpl:alpine-6.4-latest
+    environment:
+      - ZABBIX_AGENT_HOSTNAME=sn-zabbix-agent03
+      - ZABBIX_SERVER_HOSTNAME=sn-zabbix-server
+    networks:
+      - scm-network
+
+networks:
+  scm-network:
+    external: true

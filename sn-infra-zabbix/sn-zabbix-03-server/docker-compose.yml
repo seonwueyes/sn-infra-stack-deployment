@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  sn-zabbix-server:
+    container_name: sn-zabbix-server
+    build:
+      context: ./
+    image: seonwueyes.github.com/zabbix-server-mysql:alpine-6.4-latest
+    ports:
+      - 10051:10051
+    env_file:
+      - ../sn-zabbix-01-db/.env
+    environment:
+      DB_SERVER_HOST: sn-zabbix-mysql-server
+      ZBX_JAVAGATEWAY: sn-zabbix-java-gateway
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 10051"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - scm-network
+
+networks:
+  scm-network:
+    external: true
